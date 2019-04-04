@@ -12,17 +12,6 @@ const addToRanges = (a, array) => {
     return [bb, ...cc].sort((a, b) => a[0] - b[0]);
 };
 
-// console.log(' 1:', addToRanges([6, 18], [[1, 3], [5, 10], [12, 15], [17, 20], [30, 40]]));
-// console.log(' 2:', addToRanges([100, 300], [[200, 500]]));
-// console.log(' 3:', addToRanges([100, 200], [[2, 5], [7, 80]]));
-// console.log(' 4:', addToRanges([2, 5], [[100, 300]]));
-// console.log(' 5:', addToRanges([2, 5], [[1, 3] , [4, 10], [100, 300]]));
-// console.log(' 6:', addToRanges([2, 400], [[1, 3] , [4, 10], [100, 300]]));
-// console.log(' 7:', addToRanges([1, 3], [[5, 7], [10, 11]]));
-// console.log(' 8:', addToRanges([5, 10], [[5, 7], [9, 11]]));
-// console.log(' 9:', addToRanges([5, 10], [[1, 2], [4, 5], [7, 11], [100, 300]]));
-// console.log('10:', addToRanges([5, 10], []));
-
 const removeFromRanges = (a, array) => {
     const result = [];
     array
@@ -38,11 +27,6 @@ const removeFromRanges = (a, array) => {
     const cc = array.filter((b) => !hasIntersection(a, b));
     return result.concat(cc).sort((a, b) => a[0] - b[0]);
 };
-
-// console.log(" remove :"); //[1, 8) [11, 15) [17, 21)
-// console.log(" 1:", removeFromRanges([15,17], [[1,8], [11,21]])); //[1, 8) [11, 15) [17, 21)
-// console.log(" 2:", removeFromRanges([10,10], [[1,8], [11,21]])); //[1, 8) [10, 21)
-
 
 class RangeList {
 
