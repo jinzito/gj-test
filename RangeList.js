@@ -5,12 +5,20 @@
 const hasIntersection = (a, b) => !(b[0] > a[1] || a[0] > b[1]);
 
 const addToRanges = (a, array) => {
-    const bb = array
+    const intersectedRange = array
         .filter((b) => hasIntersection(a, b))
         .reduce((acc, b) => ([Math.min(acc[0], b[0]), Math.max(acc[1], b[1])]), a);
-    const cc = array.filter((b) => !hasIntersection(a, b));
-    return [bb, ...cc].sort((a, b) => a[0] - b[0]);
+    const nonIntersectedRanges = array.filter((b) => !hasIntersection(a, b));
+    return [intersectedRange, ...nonIntersectedRanges].sort(sortRangesByOrder);
 };
+
+const sortRangesByOrder = (a, b) => a[0] - b[0];
+
+const isValidRange = (range) =>
+    Array.isArray(range) &&
+    range.length === 2 &&
+    Number.isInteger(range[0]) &&
+    Number.isInteger(range[1]);
 
 const removeFromRanges = (a, array) => {
     const result = [];
@@ -24,16 +32,11 @@ const removeFromRanges = (a, array) => {
                 result.push([a[1], b[1]]);
             }
         });
-    const cc = array.filter((b) => !hasIntersection(a, b));
-    return result.concat(cc).sort((a, b) => a[0] - b[0]);
+    const nonIntersectedRanges = array.filter((b) => !hasIntersection(a, b));
+    return result.concat(nonIntersectedRanges).sort(sortRangesByOrder);
 };
 
 class RangeList {
-
-    /**
-     *
-     * NOTE: Feel free to add any extra member variables/functions you like.
-     */
 
     constructor() {
         this.ranges = [];
@@ -44,7 +47,9 @@ class RangeList {
      * @param {Array<number>} range - Array of two integers that specify beginning and end of range.
      */
     add(range) {
-        this.ranges = addToRanges(range, this.ranges);
+        if (isValidRange(range)) {
+            this.ranges = addToRanges(range, this.ranges);
+        }
     }
 
     /**
@@ -52,7 +57,9 @@ class RangeList {
      * @param {Array<number>} range - Array of two integers that specify beginning and end of range.
      */
     remove(range) {
-        this.ranges = removeFromRanges(range, this.ranges);
+        if (isValidRange(range)) {
+            this.ranges = removeFromRanges(range, this.ranges);
+        }
     }
 
     /**
